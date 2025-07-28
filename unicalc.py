@@ -18,7 +18,7 @@ class NumVariable():
                           f'{self.name}_but = tk.Entry({name_of_window})',
                           f'{self.name}_but.place(x={place_x}, y={place_y}, width={place_width})',
                           f'tk.Label({name_of_window}, text="{label_txt}",'
-                          f'\tfont=("Arial", {label_font}), bg="white").place(x={label_x}, y={label_y}, width={label_width})',
+                          f'\n\tfont=("Arial", {label_font}), bg="white").place(x={label_x}, y={label_y}, width={label_width})',
                           '# - - - - -']
 
 class BinVariable():
@@ -37,5 +37,5 @@ class BinVariable():
                           f'{self.name}_but = ttk.Combobox(window, values=[{self.name_of_positive_class},{self.name_of_negative_class}], state="readonly")',
                           f'{self.name}_but.place(x={place_x}, y={place_y}, width={place_width})',
                           f'tk.Label({name_of_window}, text="{label_txt}",'
-                          f'\tfont=("Arial", {label_font}), bg="white").place(x={label_x}, y={label_y}, width={label_width})',
+                          f'\n\tfont=("Arial", {label_font}), bg="white").place(x={label_x}, y={label_y}, width={label_width})',
                           '# - - - - -']
