@@ -60,12 +60,18 @@ class BinVariable():
             return
 
 class Creator():
-    def __init__(self, name_of_prog, num_of_binvars:int, num_of_numvars:int):
+    def __init__(self):
+        self.name_of_prog = None
+        self.num_of_binvars = None
+        self.num_of_numvars = None
+        self.num_of_vars = None
+        self._box = dict()
+
+    def init_creator(self, name_of_prog, num_of_binvars:int, num_of_numvars:int):
         self.name_of_prog = name_of_prog
         self.num_of_binvars = num_of_binvars
         self.num_of_numvars = num_of_numvars
         self.num_of_vars = num_of_binvars + num_of_numvars
-        self._box = dict()
 
     def create_vars(self):
         for i in range(self.num_of_binvars):
@@ -84,7 +90,7 @@ class Creator():
         else:
             self._box[key_of_var].init_numvariable(coeff)
 
-class Creator():
+class Decorator():
     def __init__(self):
         self.creator = None
     #
