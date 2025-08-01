@@ -84,3 +84,24 @@ class Creator():
         else:
             self._box[key_of_var].init_numvariable(coeff)
 
+class Creator():
+    def __init__(self):
+        self.creator = None
+    #
+    def start_work(self, creator):
+        self.craetor = creator
+        #
+        window = tk.Tk()
+        #
+        window.resizable(width=False, height=False)
+        window.title('UNICALC')
+        #
+        window.geometry('1000x580')
+        #
+        window['bg'] = 'gainsboro'
+        #
+        task_to_prog = tk.Label(window, text='UNICALC',
+                                font=('Arial', 20), fg='black', bg='white')
+        task_to_prog.place(x=60, y=25, width=676)
+        #
+        window.mainloop()
