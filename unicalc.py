@@ -66,12 +66,18 @@ class Creator():
         self.num_of_numvars = None
         self.num_of_vars = None
         self._box = dict()
+        self.text_block_of_prog = None
 
     def init_creator(self, name_of_prog, num_of_binvars:int, num_of_numvars:int):
         self.name_of_prog = name_of_prog
         self.num_of_binvars = num_of_binvars
         self.num_of_numvars = num_of_numvars
         self.num_of_vars = num_of_binvars + num_of_numvars
+        self.text_block_of_prog = ['import tkinter as tk\nfrom tkinter import messagebox\nimport os\nimport numpy as np',
+                                   'window = tk.Tk()\nwindow.resizable(width=False, height=False)',
+                                   f'window.title({name_of_prog})\nwindow.geometry("800x700")\nwindow["bg"] = "gainsboro"',
+                                   f'task_to_prog = tk.Label(window, text="{name_of_prog}", font=("Arial", 14), fg="black", bg="white")',
+                                   'task_to_prog.place(x=58, y=45, width=700)']
 
     def create_vars(self):
         for i in range(self.num_of_binvars):
