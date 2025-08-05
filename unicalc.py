@@ -73,9 +73,9 @@ class Creator():
         self.num_of_binvars = num_of_binvars
         self.num_of_numvars = num_of_numvars
         self.num_of_vars = num_of_binvars + num_of_numvars
-        self.text_block_of_prog = ['import tkinter as tk\nfrom tkinter import messagebox\nimport os\nimport numpy as np',
+        self.text_block_of_prog = ['import tkinter as tk\nfrom tkinter import messagebox\nimport os\nimport numpy as np\n\n',
                                    'window = tk.Tk()\nwindow.resizable(width=False, height=False)',
-                                   f'window.title({name_of_prog})\nwindow.geometry("800x700")\nwindow["bg"] = "gainsboro"',
+                                   f'window.title("{name_of_prog}")\nwindow.geometry("800x700")\nwindow["bg"] = "gainsboro"',
                                    f'task_to_prog = tk.Label(window, text="{name_of_prog}", font=("Arial", 14), fg="black", bg="white")',
                                    'task_to_prog.place(x=58, y=45, width=700)']
 
@@ -96,24 +96,46 @@ class Creator():
         else:
             self._box[key_of_var].init_numvariable(coeff)
 
-class Decorator():
-    def __init__(self):
-        self.creator = None
-    #
-    def start_work(self, creator):
-        self.craetor = creator
-        #
-        window = tk.Tk()
-        #
-        window.resizable(width=False, height=False)
-        window.title('UNICALC')
-        #
-        window.geometry('1000x580')
-        #
-        window['bg'] = 'gainsboro'
-        #
-        task_to_prog = tk.Label(window, text='UNICALC',
-                                font=('Arial', 20), fg='black', bg='white')
-        task_to_prog.place(x=60, y=25, width=676)
-        #
-        window.mainloop()
+#_______________________________________________________________________________________________________________________
+creator = Creator()
+# _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+window = tk.Tk()
+window.resizable(width=False, height=False)
+window.title('UNICALC')
+window.geometry('800x800')
+window['bg'] = 'gainsboro'
+# _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+task_to_prog = tk.Label(window, text='UNICALC',
+                        font=('Arial', 20), fg='black', bg='white')
+task_to_prog.place(x=50, y=45, width=700)
+
+# _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+name_of_prog_but = tk.Entry(window, bg='grey90')
+name_of_prog_but.place(x=250, y=115, width=500)
+tk.Label(window, text='Название программы:',
+         font=('Arial', 11),
+         bg='grey70').place(x=50, y=115, width=180)
+
+tk.Label(window, text='Определите количество переменных разных классов (до 10 переменных в сумме):',
+         font=('Arial', 11),
+         bg='gainsboro').place(x=30, y=145, width=700)
+
+num_of_bin_but = tk.Entry(window, bg='grey90')
+num_of_bin_but.place(x=310, y=175, width=40)
+tk.Label(window, text='Количество бинарных переменных:',
+         font=('Arial', 11),
+         bg='grey70').place(x=50, y=175, width=250)
+
+
+num_of_num_but = tk.Entry(window, bg='grey90')
+num_of_num_but.place(x=710, y=175, width=40)
+tk.Label(window, text='Количество числовых переменных:',
+         font=('Arial', 11),
+         bg='grey70').place(x=450, y=175, width=250)
+
+
+
+
+# _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+window.mainloop()
