@@ -133,9 +133,68 @@ num_of_num_but.place(x=710, y=175, width=40)
 tk.Label(window, text='Количество числовых переменных:',
          font=('Arial', 11),
          bg='grey70').place(x=450, y=175, width=250)
+# _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
+def get_initiation():
 
+    params = [name_of_prog_but.get(),
+              num_of_bin_but.get(),
+              num_of_num_but.get()]
 
+    #
+    text_of_params = ['Название программы',
+                      'Количество бинарных переменных',
+                      'Количество числовых переменных']
+    # Check exist #
+    for i in range(3):
+        if params[i] == '':
+            messagebox.showinfo('Report', f'Заполните показатель {text_of_params[i]}')
+            return
+    # Check num_of_... is integer #
+    for i in range(2):
+        try:
+            params[i+1] = int(params[i+1])
+        except:
+            messagebox.showinfo('Report', f'Проверьте показатель {text_of_params[i+1]}. Он должен быть числовым.')
+            return
+    # Check amount of variables #
+    if params[1] + params[2] > 10:
+        messagebox.showinfo('Report', f'Сумма числовых и бинарных показателей должна быть менее 10')
+        return
+    # Init Creator
+    creator.init_creator(params[0],
+                         params[1],
+                         params[2])
+    #
+    variables = [None]*(params[1] + params[2])
+    #
+    for i in range(params[1] + params[2]):
+        variables[i] = (tk.Entry(window).place(x=50, y=285 + (i * 40), width=500),
+                        tk.Entry(window).place(x=650, y=285 + (i * 40), width=100))
+    #
+    return
+
+init_button = tk.Button(window, text='ПРИМЕНИТЬ',
+                  command=get_initiation).place(x=50, y=215, width=700)
+
+# _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tk.Label(window, text='-'*180,
+         font=('Arial', 10),
+         bg='gainsboro').place(x=50, y=255, width=700)
+#
+for i in range(10):
+    tk.Label(window, text='',
+             font=('Arial', 11),
+             bg='grey70').place(x=50, y=285+(i*40), width=700)
+
+# _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+def get_creation():
+    pass
+
+create_button = tk.Button(window, text='СОЗДАТЬ ПРОГРАММУ',
+                  command=get_creation).place(x=50, y=700, width=700)
 
 # _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 window.mainloop()
