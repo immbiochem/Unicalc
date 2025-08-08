@@ -96,105 +96,105 @@ class Creator():
         else:
             self._box[key_of_var].init_numvariable(coeff)
 
+class App:
+    def __init__(self, creator):
+        self.creator = creator
+        self.window = tk.Tk()
+        self.window.resizable(width=False, height=False)
+        self.window.title('UNICALC')
+        self.window.geometry('800x800')
+        self.window.config(bg='gainsboro')
+        self.variables = [None]*10
+        #
+        self.create_primal_interface()
+
+        #
+        self.window.mainloop()
+    #
+    def create_primal_interface(self):
+        self.task_to_prog = tk.Label(self.window, text='UNICALC', font=('Arial', 20), fg='black', bg='white')
+        self.task_to_prog.place(x=50, y=45, width=700)
+        self.name_of_prog_but = tk.Entry(self.window, bg='grey90')
+        self.name_of_prog_but.place(x=250, y=115, width=500)
+        tk.Label(self.window, text='Название программы:',
+                 font=('Arial', 11),
+                 bg='grey70').place(x=50, y=115, width=180)
+
+        tk.Label(self.window, text='Определите количество переменных разных классов (до 10 переменных в сумме):',
+                 font=('Arial', 11),
+                 bg='gainsboro').place(x=30, y=145, width=700)
+
+        self.num_of_bin_but = tk.Entry(self.window, bg='grey90')
+        self.num_of_bin_but.place(x=310, y=175, width=40)
+        tk.Label(self.window, text='Количество бинарных переменных:',
+                 font=('Arial', 11),
+                 bg='grey70').place(x=50, y=175, width=250)
+
+        self.num_of_num_but = tk.Entry(self.window, bg='grey90')
+        self.num_of_num_but.place(x=710, y=175, width=40)
+        tk.Label(self.window, text='Количество числовых переменных:',
+                 font=('Arial', 11),
+                 bg='grey70').place(x=450, y=175, width=250)
+        #
+        tk.Label(self.window, text='-' * 180,
+                 font=('Arial', 10),
+                 bg='gainsboro').place(x=50, y=255, width=700)
+        for i in range(10):
+            self.variables[i] = tk.Label(self.window, text='',
+                     font=('Arial', 11),
+                     bg='grey70').place(x=50, y=285 + (i * 40), width=700)
+        #
+        self.init_button = tk.Button(self.window, text='ПРИМЕНИТЬ',
+                                command=self.get_initiation).place(x=50, y=215, width=700)
+
+        self.create_button = tk.Button(self.window, text='СОЗДАТЬ ПРОГРАММУ',
+                                  command=self.get_creation).place(x=50, y=700, width=700)
+
+    def get_initiation(self):
+        params = [self.name_of_prog_but.get(),
+                  self.num_of_bin_but.get(),
+                  self.num_of_num_but.get()]
+
+        #
+        text_of_params = ['Название программы',
+                          'Количество бинарных переменных',
+                          'Количество числовых переменных']
+        # Check exist #
+        for i in range(3):
+            if params[i] == '':
+                messagebox.showinfo('Report', f'Заполните показатель {text_of_params[i]}')
+                return
+        # Check num_of_... is integer #
+        for i in range(2):
+            try:
+                params[i + 1] = int(params[i + 1])
+            except:
+                messagebox.showinfo('Report', f'Проверьте показатель {text_of_params[i + 1]}. Он должен быть числовым.')
+                return
+        # Check amount of variables #
+        if params[1] + params[2] > 10:
+            messagebox.showinfo('Report', f'Сумма числовых и бинарных показателей должна быть менее 10')
+            return
+        # Init Creator
+        self.creator.init_creator(params[0],
+                             params[1],
+                             params[2])
+        #
+        for i in range(params[1] + params[2]):
+            self.variables[i] = (tk.Entry(self.window).place(x=50, y=285 + (i * 40), width=500),
+                            tk.Entry(self.window).place(x=650, y=285 + (i * 40), width=100))
+        for i in range(params[1] + params[2],10):
+            self.variables[i] = tk.Label(self.window, text='',
+                     font=('Arial', 11),
+                     bg='grey70').place(x=50, y=285 + (i * 40), width=700)
+        return
+
+    def get_creation(self):
+        pass
+
+
 #_______________________________________________________________________________________________________________________
 creator = Creator()
-# _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-window = tk.Tk()
-window.resizable(width=False, height=False)
-window.title('UNICALC')
-window.geometry('800x800')
-window['bg'] = 'gainsboro'
-# _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-task_to_prog = tk.Label(window, text='UNICALC',
-                        font=('Arial', 20), fg='black', bg='white')
-task_to_prog.place(x=50, y=45, width=700)
-
+ap = App(creator)
 # _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
-name_of_prog_but = tk.Entry(window, bg='grey90')
-name_of_prog_but.place(x=250, y=115, width=500)
-tk.Label(window, text='Название программы:',
-         font=('Arial', 11),
-         bg='grey70').place(x=50, y=115, width=180)
-
-tk.Label(window, text='Определите количество переменных разных классов (до 10 переменных в сумме):',
-         font=('Arial', 11),
-         bg='gainsboro').place(x=30, y=145, width=700)
-
-num_of_bin_but = tk.Entry(window, bg='grey90')
-num_of_bin_but.place(x=310, y=175, width=40)
-tk.Label(window, text='Количество бинарных переменных:',
-         font=('Arial', 11),
-         bg='grey70').place(x=50, y=175, width=250)
-
-
-num_of_num_but = tk.Entry(window, bg='grey90')
-num_of_num_but.place(x=710, y=175, width=40)
-tk.Label(window, text='Количество числовых переменных:',
-         font=('Arial', 11),
-         bg='grey70').place(x=450, y=175, width=250)
-# _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-
-def get_initiation():
-
-    params = [name_of_prog_but.get(),
-              num_of_bin_but.get(),
-              num_of_num_but.get()]
-
-    #
-    text_of_params = ['Название программы',
-                      'Количество бинарных переменных',
-                      'Количество числовых переменных']
-    # Check exist #
-    for i in range(3):
-        if params[i] == '':
-            messagebox.showinfo('Report', f'Заполните показатель {text_of_params[i]}')
-            return
-    # Check num_of_... is integer #
-    for i in range(2):
-        try:
-            params[i+1] = int(params[i+1])
-        except:
-            messagebox.showinfo('Report', f'Проверьте показатель {text_of_params[i+1]}. Он должен быть числовым.')
-            return
-    # Check amount of variables #
-    if params[1] + params[2] > 10:
-        messagebox.showinfo('Report', f'Сумма числовых и бинарных показателей должна быть менее 10')
-        return
-    # Init Creator
-    creator.init_creator(params[0],
-                         params[1],
-                         params[2])
-    #
-    variables = [None]*(params[1] + params[2])
-    #
-    for i in range(params[1] + params[2]):
-        variables[i] = (tk.Entry(window).place(x=50, y=285 + (i * 40), width=500),
-                        tk.Entry(window).place(x=650, y=285 + (i * 40), width=100))
-    #
-    return
-
-init_button = tk.Button(window, text='ПРИМЕНИТЬ',
-                  command=get_initiation).place(x=50, y=215, width=700)
-
-# _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-
-tk.Label(window, text='-'*180,
-         font=('Arial', 10),
-         bg='gainsboro').place(x=50, y=255, width=700)
-#
-for i in range(10):
-    tk.Label(window, text='',
-             font=('Arial', 11),
-             bg='grey70').place(x=50, y=285+(i*40), width=700)
-
-# _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-
-def get_creation():
-    pass
-
-create_button = tk.Button(window, text='СОЗДАТЬ ПРОГРАММУ',
-                  command=get_creation).place(x=50, y=700, width=700)
-
-# _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-window.mainloop()
