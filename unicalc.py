@@ -20,13 +20,12 @@ class NumVariable():
                         label_font:int, label_x:int,
                         label_y:int, label_width:int):
         if self.init_var:
-            self.text_blok = ['# - - - - -',
+            self.text_block = ['# - - - - -',
                               f'{self.name}_but = tk.Entry({name_of_window})',
                               f'{self.name}_but.place(x={place_x}, y={place_y}, width={place_width})',
                               f'tk.Label({name_of_window}, text="{label_txt}",'
                               f'\n\tfont=("Arial", {label_font}), bg="white").place(x={label_x}, y={label_y}, width={label_width})',
                               '# - - - - -']
-            self.text_block = True
         else:
             return
 
@@ -49,13 +48,12 @@ class BinVariable():
                         label_font:int, label_x:int,
                         label_y:int, label_width:int):
         if self.init_var:
-            self.text_blok = ['# - - - - -',
+            self.text_block = ['# - - - - -',
                               f'{self.name}_but = ttk.Combobox(window, values=[{self.name_of_positive_class},{self.name_of_negative_class}], state="readonly")',
                               f'{self.name}_but.place(x={place_x}, y={place_y}, width={place_width})',
                               f'tk.Label({name_of_window}, text="{label_txt}",'
                               f'\n\tfont=("Arial", {label_font}), bg="white").place(x={label_x}, y={label_y}, width={label_width})',
                               '# - - - - -']
-            self.text_block = True
         else:
             return
 
@@ -73,11 +71,11 @@ class Creator():
         self.num_of_binvars = num_of_binvars
         self.num_of_numvars = num_of_numvars
         self.num_of_vars = num_of_binvars + num_of_numvars
-        self.text_block_of_prog = ['import tkinter as tk\nfrom tkinter import messagebox\nimport os\nimport numpy as np\n\n',
+        self.text_block_of_prog = ['import tkinter as tk\nfrom tkinter import messagebox\nimport os\nimport math\n\n',
                                    'window = tk.Tk()\nwindow.resizable(width=False, height=False)',
                                    f'window.title("{name_of_prog}")\nwindow.geometry("800x700")\nwindow["bg"] = "gainsboro"',
                                    f'task_to_prog = tk.Label(window, text="{name_of_prog}", font=("Arial", 14), fg="black", bg="white")',
-                                   'task_to_prog.place(x=58, y=45, width=700)']
+                                   'task_to_prog.place(x=58, y=45, width=700)\n\n']
 
     def create_vars(self):
         for i in range(self.num_of_binvars):
@@ -95,6 +93,24 @@ class Creator():
                                                    name_of_negative_class)
         else:
             self._box[key_of_var].init_numvariable(coeff)
+
+    def create_file(self, filename):
+        with open(filename, 'w') as file:
+            # Start Block
+            for line in self.text_block_of_prog:
+                file.write(line)
+            #
+            get_p_list = ['\ndef get_p():',
+                          '\n\tx = (-3.46824288) + (0.07434824 * score2) + (0.24396986 * max_pptj)',
+                          '\n\treturn 1 / (1 + math.exp(-x))\n']
+            for line in get_p_list:
+                file.write(line)
+            file.write('_'*50)
+            # Variables
+            for key in self._box.keys():
+                for line in self._box[key].text_block:
+                    file.write(line)
+                file.write('\n\n\n')
 
 class App:
     def __init__(self, creator):
